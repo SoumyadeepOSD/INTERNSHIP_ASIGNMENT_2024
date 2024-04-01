@@ -1,10 +1,10 @@
-import DemoComponent from "./DemoComponent";
+import "./styles.css";
+import Signup from "./pages/auth/signup";
 
-
-function App() {
+const App = () => {
   return (
     <div>
-   <DemoComponent />
+        <Signup/>
     </div>
   );
 }
