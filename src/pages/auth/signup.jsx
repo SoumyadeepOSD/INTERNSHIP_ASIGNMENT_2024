@@ -38,7 +38,11 @@ const Signup = () => {
                             },
                             body: JSON.stringify(userDataObject),
                         });
-                    navigate('/signup/upload-photo');
+                    navigate('/signup/upload-photo', {
+                        state: {
+                            userName: userData.userName
+                        }
+                    });
                     if (response.status === 400) {
                         const data = await response.json();
                         if (data.error === 'DuplicateEntry') {

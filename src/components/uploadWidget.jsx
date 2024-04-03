@@ -1,24 +1,38 @@
-import { useRef, useEffect } from "react"
+import React, { useRef, useState } from "react";
 
-const UploadWidget = () => {
-    const cloudinaryRef = useRef();
-    const widgetRef = useRef();
-    useEffect(() => {
-        cloudinaryRef.current = window.cloudinary;
-        widgetRef.current = cloudinaryRef.current.createUploadWidget({
-            cloudName: "open-container",
-            uploadPreset: "",
-        }, function (error, result) {
+const UploadWidget = ({ onUpload }) => {
+  const [image, setImage] = useState(null);
+  const fileInput = useRef(null);
 
-        });
-    }, []);
-    return (
-        <div className="p-2 border-2 border-slate-200 rounded-md font-bold"
-            onClick={() => widgetRef.current.open()}
-        >
-            Upload Photo
-        </div>
-    );
-}
+  const handleUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-export default UploadWidget
+    // You can set a preview of the image
+    const imageUrl = URL.createObjectURL(file);
+    setImage(imageUrl);
+
+    // You can pass the file to the parent component
+    onUpload(file);
+  };
+
+  return (
+    <>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleUpload}
+        style={{ display: "none" }}
+        ref={fileInput}
+      />
+      <button
+        className="font-bold p-3 rounded-md border-2 border-slate-200"
+        onClick={() => fileInput.current.click()}
+      >
+        Choose image
+      </button>
+    </>
+  );
+};
+
+export default UploadWidget;

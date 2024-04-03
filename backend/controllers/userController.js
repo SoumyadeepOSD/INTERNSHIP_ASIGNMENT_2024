@@ -38,10 +38,40 @@ const createUser = async(req, res) => {
 }
 
 const loginUser = async(req, res) => {
-    
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const uploadPhoto = async(req, res) => {
+    try {
+        const {location, avatar, userName} = req.body;
+        if(location===""){
+            return res.status(400).json({
+                message: "Location is required"
+            });
+        }else if(avatar===""){
+            return res.status(400).json({
+                message: "Avatar is required"
+            });
+        }
+        const response = await User.findOneAndUpdate({userName: userName}, {location: location, avatar: avatar}, {runValidators: false});
+        res.status(201).json({
+            message: "Photo Uploaded",
+            data: response
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Internal Server Error"
+        })
+    }
 }
 
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    uploadPhoto
 }
