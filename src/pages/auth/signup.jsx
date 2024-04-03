@@ -1,8 +1,68 @@
 import React, { useState } from 'react'
 import { InputField } from '../../components/input-field';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
     const [isChecked, setIsChecked] = useState(false);
+    const [userData, setUserData] = useState({
+        name: '',
+        userName: '',
+        email: '',
+        password: '',
+    });
+    const [isEmpty, setIsEmpty] = useState(false);
+    const [showCheckboxError, setShowCheckboxError] = useState(false);
+    const [isDuplicate, setIsDuplicate] = useState(false);
+    const [duplicateField, setDuplicateField] = useState('');
+    const [ProperPasswordLength, setProperPasswordLength] = useState(true);
+    const navigate = useNavigate();
+
+    const handleSignup = async () => {
+        if (userData.name !== '' && userData.userName !== '' && userData.email !== '' && userData.password !== '' && isChecked) {
+            if (userData.password.length >= 6) {
+                setProperPasswordLength(true);
+                try {
+                    const userDataObject = {
+                        name: userData.name,
+                        userName: userData.userName,
+                        email: userData.email,
+                        password: userData.password,
+                        location: " ",
+                        avatar: " ",
+                    }
+                    const response = await fetch('http://localhost:5000/auth/signup',
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(userDataObject),
+                        });
+                    if (response.status === 200) {
+                        navigate('/signup/upload-photo');
+                        return; // Exit early if signup successful
+                    } else if (response.status === 400) {
+                        const data = await response.json();
+                        if (data.error === 'DuplicateEntry') {
+                            setIsDuplicate(true);
+                            setDuplicateField(data.message.split(' ')[0]); // Extract the field from the message
+                        return;// Exit early if duplicate entry detected
+                        }
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            }else{
+                setProperPasswordLength(false);
+            }
+        } else {
+            setIsEmpty(true);
+            setShowCheckboxError(true);
+        }
+    };
+
+
     return (
         <div className="flex flex-col lg:flex-row items-center justify-center h-screen w-screen">
             <div className="w-full lg:w-[30%] bg-yellow-200 h-0 lg:h-screen"></div>
@@ -17,19 +77,36 @@ const Signup = () => {
                         {/* Center text for mobile */}
                         <h1 className="font-bold text-2xl text-center lg:text-left">Sign up to Dribble</h1>
 
+                        {isEmpty && <div className="flex flex-row items-center">
+                            <div className="bg-red-600 rounded-full h-2 w-2 mr-2" ></div>
+                            <span className="text-red-600 text-xs font-medium ">Please fill all the fields</span>
+                        </div>
+                        }
+
+                        {isDuplicate && <div className="flex flex-row items-center">
+                            <div className="bg-red-600 rounded-full h-2 w-2 mr-2" ></div>
+                            <span className="text-red-600 text-xs font-medium ">{duplicateField} has already been taken</span>
+                        </div>
+                        }
+
                         <div className="lg:flex lg:gap-5">
-                            <InputField label="Name" type="text" placeholder="Enter your First Name" />
-                            <InputField label="Username" type="text" placeholder="Enter your Username" />
+                            <InputField label="Name" type="text" placeholder="Enter your First Name" duplicateField={duplicateField}  onChange={(e) => setUserData({ ...userData, name: e.target.value })} />
+                            <InputField label="Username" type="text" placeholder="Enter your Username" duplicateField={duplicateField} onChange={(e) => setUserData({ ...userData, userName: e.target.value })} />
                         </div>
 
-                        <InputField label="Email" type="email" placeholder="Enter your Email" />
-                        <InputField label="Password" type="password" placeholder="6+ characters" />
+                        <InputField label="Email" type="email" placeholder="Enter your Email" duplicateField={duplicateField} onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
+                        <InputField label="Password" type="password" placeholder="6+ characters" duplicateField={duplicateField} onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
+                        
+                        {ProperPasswordLength ? null : <h2 className="text-red-600 text-xs font-medium">Password must be 6+ characters</h2>}
 
-
+                        {showCheckboxError && <h2 className="text-red-600 text-xs font-medium">Please fill the checkbox!</h2>}
                         {/* checkbox */}
                         <div className="flex flex-row items-start justify-justify">
                             <div className="flex flex-row items-start justify-center">
-                                <input type="checkbox" checked={isChecked} className="mt-1 mr-2 h-5 w-5" onClick={() => setIsChecked(!isChecked)} />
+                                <input type="checkbox" checked={isChecked} className="mt-1 mr-2 h-5 w-5" onClick={() => {
+                                    setIsChecked(!isChecked);
+                                    setShowCheckboxError(false);
+                                }} />
                                 <div className="flex flex-col text-slate-500 font-medium">
                                     <p>Creating an account means you're okay with our <span className="text-purple-800">Terms of</span></p>
                                     <p><span className="text-purple-800">Service, Privacy Policy</span> and our default <span className="text-purple-600">Notification</span></p>
@@ -40,12 +117,13 @@ const Signup = () => {
                         {/* checkbox */}
 
                         {/* Button */}
-                        <button className="bg-pink-600 p-5 rounded-md">
+
+                        <button className="bg-pink-600 p-5 rounded-md" onClick={handleSignup}>
                             <h1 className="text-white font-medium">Create Account</h1>
                         </button>
 
                         <div className="flex flex-col items-start justify-start text-slate-500 font-medium">
-                            <p>This site is protected by reCAPTCHA and the Google</p> 
+                            <p>This site is protected by reCAPTCHA and the Google</p>
                             <p><span className="text-purple-800">Privacy Policy</span> and <span className="text-purple-800">Terms of Service</span> apply.</p>
                         </div>
                     </div>
