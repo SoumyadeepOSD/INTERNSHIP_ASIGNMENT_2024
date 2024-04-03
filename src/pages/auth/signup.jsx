@@ -38,22 +38,19 @@ const Signup = () => {
                             },
                             body: JSON.stringify(userDataObject),
                         });
-                    if (response.status === 200) {
-                        navigate('/signup/upload-photo');
-                        return; // Exit early if signup successful
-                    } else if (response.status === 400) {
+                    navigate('/signup/upload-photo');
+                    if (response.status === 400) {
                         const data = await response.json();
                         if (data.error === 'DuplicateEntry') {
                             setIsDuplicate(true);
                             setDuplicateField(data.message.split(' ')[0]); // Extract the field from the message
-                        return;// Exit early if duplicate entry detected
+                            return; // Exit early if duplicate entry detected
                         }
                     }
-                }
-                catch (error) {
+                } catch (error) {
                     console.log(error);
                 }
-            }else{
+            } else {
                 setProperPasswordLength(false);
             }
         } else {
@@ -61,6 +58,7 @@ const Signup = () => {
             setShowCheckboxError(true);
         }
     };
+
 
 
     return (
@@ -90,13 +88,13 @@ const Signup = () => {
                         }
 
                         <div className="lg:flex lg:gap-5">
-                            <InputField label="Name" type="text" placeholder="Enter your First Name" duplicateField={duplicateField}  onChange={(e) => setUserData({ ...userData, name: e.target.value })} />
+                            <InputField label="Name" type="text" placeholder="Enter your First Name" duplicateField={duplicateField} onChange={(e) => setUserData({ ...userData, name: e.target.value })} />
                             <InputField label="Username" type="text" placeholder="Enter your Username" duplicateField={duplicateField} onChange={(e) => setUserData({ ...userData, userName: e.target.value })} />
                         </div>
 
                         <InputField label="Email" type="email" placeholder="Enter your Email" duplicateField={duplicateField} onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
                         <InputField label="Password" type="password" placeholder="6+ characters" duplicateField={duplicateField} onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
-                        
+
                         {ProperPasswordLength ? null : <h2 className="text-red-600 text-xs font-medium">Password must be 6+ characters</h2>}
 
                         {showCheckboxError && <h2 className="text-red-600 text-xs font-medium">Please fill the checkbox!</h2>}
