@@ -1,24 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import dribbleLogo from "../images/dribble-logo.png";
 import { ChevronRightIcon, Camera } from 'lucide-react';
 import UploadWidget from '../components/uploadWidget';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ReactComponent as LoadingImage } from "../images/progress.svg";
+import { useNavigate } from 'react-router-dom';
+import LoadingPage from './loading-page';
 
 const UploadPhoto = () => {
     const [location, setLocation] = useState("");
     const [image, setImage] = useState(null);
+    const [email, setEmail] = useState("");
     const [imageUploaded, setImageUploaded] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
-    const history = useLocation();
-    const userName = history.state.userName;
     const activeclass = "text-white bg-pink-500 rounded-md px-20 py-3 my-4";
     const inactiveclass = "text-white bg-pink-200 rounded-md px-20 py-3 my-4";
     const navigator = useNavigate();
 
+    
+
     const handleUpload = (file) => {
         setImage(file);
     };
+
+    useEffect(()=>{
+        const email = window.localStorage.getItem("email");
+        setEmail(email);
+    },[]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,7 +57,7 @@ const UploadPhoto = () => {
                 body: JSON.stringify({
                     location,
                     avatar,
-                    userName,
+                    email,
                 }),
             });
 
@@ -60,6 +66,7 @@ const UploadPhoto = () => {
             }
 
             // Redirect to the next page after successful update
+            window.localStorage.setItem("avatar", avatar);
             navigator('/signup/select-category');
         } catch (error) {
             console.error(error);
@@ -69,14 +76,7 @@ const UploadPhoto = () => {
         }
     };
 
-    if (isLoading) {
-        return (
-            <div className="h-screen w-screen flex items-center justify-center">
-                <div>
-                    <LoadingImage className="h-20 w-20" />
-                </div>
-            </div>);
-    }
+    if (isLoading) return (<LoadingPage/>);
 
     return (
         <div className="flex flex-col items-center h-screen">

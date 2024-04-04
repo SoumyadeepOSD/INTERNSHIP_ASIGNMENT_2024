@@ -40,9 +40,11 @@ const Signup = () => {
                         });
                     navigate('/signup/upload-photo', {
                         state: {
-                            userName: userData.userName
+                            userName: userData.userName,
+                            email: userData.email
                         }
                     });
+                    window.localStorage.setItem("email", userData.email.toString());
                     if (response.status === 400) {
                         const data = await response.json();
                         if (data.error === 'DuplicateEntry') {
@@ -105,10 +107,15 @@ const Signup = () => {
                         {/* checkbox */}
                         <div className="flex flex-row items-start justify-justify">
                             <div className="flex flex-row items-start justify-center">
-                                <input type="checkbox" checked={isChecked} className="mt-1 mr-2 h-5 w-5" onClick={() => {
-                                    setIsChecked(!isChecked);
-                                    setShowCheckboxError(false);
-                                }} />
+                                <input
+                                    type="checkbox"
+                                    checked={isChecked}
+                                    className="mt-1 mr-2 h-5 w-5"
+                                    onChange={(e) => {
+                                        setIsChecked(e.target.checked);
+                                        setShowCheckboxError(false);
+                                    }}
+                                />
                                 <div className="flex flex-col text-slate-500 font-medium">
                                     <p>Creating an account means you're okay with our <span className="text-purple-800">Terms of</span></p>
                                     <p><span className="text-purple-800">Service, Privacy Policy</span> and our default <span className="text-purple-600">Notification</span></p>
