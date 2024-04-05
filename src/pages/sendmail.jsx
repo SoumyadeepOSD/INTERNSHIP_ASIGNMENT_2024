@@ -81,8 +81,9 @@ const EmailVerification = () => {
                         />
                     </Link>
                     {/* -------------MENU ICON FOR SMALL DEVICES------------------------------ */}
-                    <div className={`rounded-full  border-2 ${mediumlightGrayText} h-10 w-10 bg-red-400 bg-contain lg:hidden`}
-                    style={{ backgroundImage: `url(${params.avatar})` }} 
+                    <div className={`rounded-full  border-2 ${mediumlightGrayText} h-10 w-10 bg-contain lg:hidden`}
+                    style=
+                    {{ backgroundImage: `url("https://res.cloudinary.com/open-container/image/upload/v1712347719/internship_project/kjx2jcbzlds4xjbah012.svg")`}} 
                     />
                     <div className={`rounded-md ${defaultBgPink} px-5 py-3 lg:hidden`}>
                         <h2 className="text-white">Upload</h2>
