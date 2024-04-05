@@ -7,7 +7,7 @@ import { CheckCircle2 } from "lucide-react";
 export const Categorycard = ({ type, isSelected, title, description, onClick }) => {
     const borderClass = isSelected ? "border-pink-500" : "border-slate-200";
     return (
-      <div className="relative h-fit w-[25%]">
+      <div className="relative h-fit w-[90%] lg:w-[25%]">
       <div className={`h-full flex flex-col items-center justify-center p-3 rounded-md border-2 ${borderClass} hover:cursor-pointer transition-all duration-300 overflow-y-hidden`} onClick={onClick}>
         <img
           src={type === "first" ? FirstCategory : type === "second" ? SecondCategory : ThirdCategory}
