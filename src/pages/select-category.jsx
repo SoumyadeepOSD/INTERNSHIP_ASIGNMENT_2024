@@ -3,7 +3,7 @@ import { categories } from '../components/static/categoryData';
 import { Categorycard } from '../components/category-card';
 import dribbleLogo from "../images/dribble-logo.png";
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoadingPage from './loading-page';
 
 const activeclass = "text-white bg-pink-500 rounded-md px-20 py-3 my-4";
@@ -15,12 +15,12 @@ const SelectCategory = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const email = window.localStorage.getItem("email");
     setEmail(email);
   }, [])
-  
+
   async function handleSubmit() {
     if (isSelected) {
       setIsLoading(true);
@@ -48,11 +48,13 @@ const SelectCategory = () => {
   return (
     <div className="flex flex-col h-screen items-center">
       <section className="mx-5 w-[90%]">
-        <img
-          src={dribbleLogo}
-          className="w-24 h-24"
-          alt="dribble logo"
-        />
+        <Link to="/">
+          <img
+            src={dribbleLogo}
+            className="w-24 h-24"
+            alt="dribble logo"
+          />
+        </Link>
       </section>
       <section className="w-[80%]">
         <h1 className="font-bold text-3xl text-center">What brings you to Dribble?</h1>

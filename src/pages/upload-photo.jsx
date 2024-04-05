@@ -2,7 +2,7 @@ import { ChevronRightIcon, Camera } from 'lucide-react';
 import UploadWidget from '../components/uploadWidget';
 import dribbleLogo from "../images/dribble-logo.png";
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoadingPage from './loading-page';
 import PopupCard from '../components/popup-card';
 
@@ -88,11 +88,13 @@ const UploadPhoto = () => {
     return (
         <div className="flex flex-col items-center h-screen">
             <section className="mx-5 w-[90%]">
+                <Link to="/"> 
                 <img
                     src={dribbleLogo}
                     className="w-24 h-24"
                     alt="dribble logo"
                 />
+                </Link>
             </section>
             <div></div>
             <section className="flex flex-col items-start justify-start w-[90%] lg:w-1/2 mt-5 h-full">
