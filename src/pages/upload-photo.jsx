@@ -88,13 +88,13 @@ const UploadPhoto = () => {
                 />
             </section>
             <div></div>
-            <section className="flex flex-col items-start justify-start w-1/2 mt-5 h-full">
-                <h1 className="font-bold text-4xl my-3">Welcome!Let's create your profile</h1>
+            <section className="flex flex-col items-start justify-start w-[90%] lg:w-1/2 mt-5 h-full">
+                <h1 className="font-bold text-2xl lg:text-4xl my-3">Welcome!Let's create your profile</h1>
                 <h5 className="text-slate-500 font-sm">Lets others get to know you better! You can do these later</h5>
 
                 <h2 className="font-bold mt-8 mb-4">Add an avatar</h2>
 
-                <div className="flex flex-row items-start justify-between mb-16">
+                <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-between mb-16 ">
                     {image ? (
                         <div
                             className="rounded-full border-dotted border-4 border-slate-400 h-40 w-40 flex flex-col items-center justify-center"
@@ -106,7 +106,7 @@ const UploadPhoto = () => {
                         </div>
                     )}
 
-                    <div className="flex flex-col items-start justify-start mx-20 gap-5">
+                    <div className="flex flex-col items-start justify-start mx-20 gap-5 my-5 lg:my-0">
                         <UploadWidget onUpload={handleUpload} />
                         <div className="flex flex-row items-center justify-start">
                             <ChevronRightIcon className="text-slate-500 font-sm" />

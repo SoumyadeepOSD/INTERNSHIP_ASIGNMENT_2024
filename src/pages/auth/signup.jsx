@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { InputField } from '../../components/input-field';
 import { useNavigate } from 'react-router-dom';
+import LoadingPage from '../loading-page';
 
 const Signup = () => {
     const [isChecked, setIsChecked] = useState(false);
@@ -15,12 +16,19 @@ const Signup = () => {
     const [isDuplicate, setIsDuplicate] = useState(false);
     const [duplicateField, setDuplicateField] = useState('');
     const [ProperPasswordLength, setProperPasswordLength] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+
+
+    const handleAlu = () => {
+        navigate('/signup/alu');
+    }
 
     const handleSignup = async () => {
         if (userData.name !== '' && userData.userName !== '' && userData.email !== '' && userData.password !== '' && isChecked) {
             if (userData.password.length >= 6) {
                 setProperPasswordLength(true);
+                setIsLoading(true);
                 try {
                     const userDataObject = {
                         name: userData.name,
@@ -38,12 +46,8 @@ const Signup = () => {
                             },
                             body: JSON.stringify(userDataObject),
                         });
-                    navigate('/signup/upload-photo', {
-                        state: {
-                            userName: userData.userName,
-                            email: userData.email
-                        }
-                    });
+                    navigate('/signup/upload-photo');
+                    setIsLoading(false);
                     window.localStorage.setItem("email", userData.email.toString());
                     if (response.status === 400) {
                         const data = await response.json();
@@ -55,6 +59,8 @@ const Signup = () => {
                     }
                 } catch (error) {
                     console.log(error);
+                }finally{
+                    setIsLoading(false);
                 }
             } else {
                 setProperPasswordLength(false);
@@ -64,6 +70,12 @@ const Signup = () => {
             setShowCheckboxError(true);
         }
     };
+
+    if(isLoading){
+        return(
+            <LoadingPage/>
+        );
+    }
 
 
 
@@ -126,7 +138,6 @@ const Signup = () => {
                         {/* checkbox */}
 
                         {/* Button */}
-
                         <button className="bg-pink-600 p-5 rounded-md" onClick={handleSignup}>
                             <h1 className="text-white font-medium">Create Account</h1>
                         </button>
@@ -135,6 +146,9 @@ const Signup = () => {
                             <p>This site is protected by reCAPTCHA and the Google</p>
                             <p><span className="text-purple-800">Privacy Policy</span> and <span className="text-purple-800">Terms of Service</span> apply.</p>
                         </div>
+                        <button onClick={handleAlu}>
+                            Allu
+                        </button>
                     </div>
                 </section>
             </section>
