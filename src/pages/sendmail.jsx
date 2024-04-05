@@ -136,7 +136,7 @@ const EmailVerification = () => {
                 <h2 className="text-sm lg:text-base text-center text-slate-500 my-5">Wrong email address? <span className="font-bold text-pink-500">Change it</span></h2>
             </section>
             {/* ==============FOOTER SECTION====================================== */}
-            <footer className="grid grid-cols-1 lg:grid-cols-6 items-center lg:items-start justify-center w-full px-10 mt-40 pt-20 pb-32 bg-slate-100">
+            <footer className="flex flex-col lg:flex-row items-center lg:items-start justify-center w-full px-10 mt-40 pt-20 pb-32 bg-slate-100">
                 {/* ===========FOOTER DRIBBLE LOGO AND TAGLINE============= */}
                 <div>
                     <img
@@ -154,7 +154,7 @@ const EmailVerification = () => {
                     </div>
                 </div>
                 {/* -------------FOOTER LINKS------------- */}
-                <div className="grid grid-cols-2 mt-10">
+                <div className="grid grid-cols-2 lg:grid-cols-5 items-start justify-between mt-10 w-full">
                 {footerdata.map((column) => (
                     <ul key={column.id} className="flex flex-col items-start justify-start">
                         <li className="font-bold text-sm">{column.title}</li>
@@ -164,7 +164,6 @@ const EmailVerification = () => {
                     </ul>
                 ))}
                 </div>
-                
             </footer>
         </div>
     );
