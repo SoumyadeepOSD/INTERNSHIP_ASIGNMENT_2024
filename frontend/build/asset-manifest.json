@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0bb4b3bf.css",
+    "main.js": "/static/js/main.4bd7c593.js",
+    "static/media/third-category.png": "/static/media/third-category.03e82184e512c6bf6a66.png",
+    "static/media/first-category.png": "/static/media/first-category.b38ab77c82f725315607.png",
+    "static/media/second-category.png": "/static/media/second-category.f206fafd6eb0818b1c9d.png",
+    "static/media/dribble-logo.png": "/static/media/dribble-logo.30526307a235bec5b108.png",
+    "index.html": "/index.html",
+    "static/media/progress.svg": "/static/media/progress.4e52837966f96af827e209405d3dd542.svg",
+    "main.0bb4b3bf.css.map": "/static/css/main.0bb4b3bf.css.map",
+    "main.4bd7c593.js.map": "/static/js/main.4bd7c593.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0bb4b3bf.css",
+    "static/js/main.4bd7c593.js"
+  ]
+}
