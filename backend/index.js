@@ -1,36 +1,37 @@
 const express = require('express');
-const path = require('path');
 const userRoutes = require('./routes/userRoute.js');
+const dbConnect = require("./dbconfig/connectDB.js");
 require('dotenv').config();
 const cors = require('cors');
-const PORT = process.env.PORT || 5000;
-
-const dbConnect = require("./dbconfig/connectDB.js");
-
-dbConnect();
-
 const app = express();
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}))
-app.options('*', cors());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+const PORT = process.env.PORT || 5000;
+const path = require('path');
 
-app.get('/', (req, res) => {
-    res.send('Welcome to Node.js server');
-})
+app.use(express.json());
+app.use(cors(
+  {
+    origin: ['http://localhost:3000'],
+  }
+))
+app.use(express.urlencoded({ extended: true }));
+dbConnect();
 
 app.use('/auth', userRoutes);
 
-// Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'frontend/build')));
+// -------------DEPLOYMENT-------------
+// const __dirname1 = path.resolve();
+// if(process.env.NODE_ENV==='production'){
+//     app.use(express.static(path.join(__dirname1,"/frontend/build")));
 
-// For all other requests, serve the React app
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
-});
+//     app.get("*", (req, res)=>{
+//         res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
+//     })
+// }else{
+//     app.get("/", (req, res) => {
+//         console.log("Hello World");
+//     });    
+// }
+app.get("/", (req, res)=>console.log("Hello World"));
 
 app.listen(PORT, () => {
   console.log('Server is running on port ' + PORT);

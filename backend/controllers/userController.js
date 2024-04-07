@@ -28,12 +28,12 @@ const createUser = async(req, res) => {
             location:location
         });
         await user.save();
-        res.status(201).json({
+        return res.status(201).json({
             message: "New User Created"
         });
     } catch (error) {
         console.log(error);
-        res.status(500).json({
+        return res.status(500).json({
             message: "Internal Server Error"
         })
     }
@@ -60,13 +60,13 @@ const uploadPhoto = async(req, res) => {
             });
         }
         const response = await User.findOneAndUpdate({email: email}, {location: location, avatar: avatar}, {runValidators: false});
-        res.status(201).json({
+        return res.status(201).json({
             message: "Photo Uploaded",
             data: response
         });
     } catch (error) {
         console.log(error);
-        res.status(500).json({
+        return res.status(500).json({
             message: "Internal Server Error"
         })
     }
@@ -74,11 +74,11 @@ const uploadPhoto = async(req, res) => {
 
 const sendEmailToUser = async (req, res) => {
     try {
-        // const { email } = req.body;
+        const { email } = req.body;
         const resend = new Resend(RESEND_API_KEY);
         const response = await resend.emails.send({
             from: 'onboarding@resend.dev',
-            to: "opencontainer255@gmail.com",
+            to: email,
             subject: 'Thankyou',
             html: 'Thanks for giving me this opportunity. I think I will fit for fullstack role of your company'
         });
