@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { InputField } from '../../components/input-field';
 import { useNavigate } from 'react-router-dom';
 import LoadingPage from '../loading-page';
+import FirstCategory from "../../images/signup-sideimage.png";
 
 const Signup = () => {
     const [isChecked, setIsChecked] = useState(false);
@@ -19,10 +20,6 @@ const Signup = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-
-    const handleAlu = () => {
-        navigate('/signup/alu');
-    }
 
     const handleSignup = async () => {
         if (userData.name !== '' && userData.userName !== '' && userData.email !== '' && userData.password !== '' && isChecked) {
@@ -82,7 +79,10 @@ const Signup = () => {
 
     return (
         <div className="flex flex-col lg:flex-row items-center justify-center h-screen w-screen">
-            <div className="w-full lg:w-[30%] bg-yellow-200 h-0 lg:h-screen"></div>
+            <div 
+                className="w-full lg:w-[50%] bg-yellow-200 h-0 lg:h-screen"
+                style={{ backgroundImage: `url(${FirstCategory})`, backgroundSize: "contain", backgroundPosition: "center" }}
+            />
             {/* ------------------right side or signup------------------------------------------------------------- */}
             <section className="w-[70%] flex flex-col h-screen">
                 <div className="w-full flex items-end justify-end px-5 h-[10%]">
@@ -147,9 +147,6 @@ const Signup = () => {
                             <p>This site is protected by reCAPTCHA and the Google</p>
                             <p><span className="text-purple-800">Privacy Policy</span> and <span className="text-purple-800">Terms of Service</span> apply.</p>
                         </div>
-                        <button onClick={handleAlu}>
-                            Allu
-                        </button>
                     </div>
                 </section>
             </section>
