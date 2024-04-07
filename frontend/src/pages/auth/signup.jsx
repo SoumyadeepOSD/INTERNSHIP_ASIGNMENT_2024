@@ -38,7 +38,7 @@ const Signup = () => {
                         location: " ",
                         avatar: " ",
                     }
-                    const response = await fetch('http://localhost:5000/auth/signup',
+                    const response = await fetch('https://internship-asignment-2024.onrender.com/auth/signup',
                         {
                             method: 'POST',
                             headers: {

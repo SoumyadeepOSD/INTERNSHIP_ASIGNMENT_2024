@@ -58,7 +58,7 @@ const UploadPhoto = () => {
 
             const { secure_url: avatar } = await response.json();
 
-            const userUpdateResponse = await fetch("http://localhost:5000/auth/upload-photo", {
+            const userUpdateResponse = await fetch("https://internship-asignment-2024.onrender.com/auth/upload-photo", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
