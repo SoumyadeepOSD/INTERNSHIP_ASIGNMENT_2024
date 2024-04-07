@@ -1,0 +1,10 @@
+/* src/styles.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.inputFieldDuplicate {
+    background-color: #ffcccc; /* or use bg-red-100 if you're using Tailwind CSS */
+}
+
+
